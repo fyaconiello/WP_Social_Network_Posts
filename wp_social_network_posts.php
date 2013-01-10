@@ -133,46 +133,46 @@ if(!class_exists('WP_Social_Network_Posts'))
             } // if($_POST['post_type'] == 'social_network_post' && current_user_can('edit_post', $post_id))
         } // END function save_post($post_id)
 		
-		/**
-		 * add a menu
-		 */		
-		function add_menu()
-		{
-			add_options_page('WP Social Network Posts Settings', 'WP SN Posts', 'manage_options', 'wp_sn_posts', array(&$this, 'plugin_settings_page'));
-		} // END function add_menu()
-		
-		/**
-		 * Initialize some custom settings
-		 */		
-		function init_settings()
-		{
-			// register the settings for this plugin
-			register_setting('wp_sn_posts-group', 'fb_app_id');
-			register_setting('wp_sn_posts-group', 'fb_secret');
-			register_setting('wp_sn_posts-group', 'fb_username');
-		} // END function init_custom_settings()
-		
-		/**
-		 * Menu Callback
-		 */		
-		function plugin_settings_page()
-		{
-			if(!current_user_can('manage_options'))
-			{
-				wp_die(__('You do not have sufficient permissions to access this page.'));
-			}
-			
-			// Render the settings template
-			include(sprintf("%s/templates/settings.php", dirname(__FILE__)));
-		} // END function plugin_settings_page()
+        /**
+         * add a menu
+         */		
+        function add_menu()
+        {
+            add_options_page('WP Social Network Posts Settings', 'WP SN Posts', 'manage_options', 'wp_sn_posts', array(&$this, 'plugin_settings_page'));
+        } // END function add_menu()
+
+        /**
+         * Initialize some custom settings
+         */		
+        function init_settings()
+        {
+            // register the settings for this plugin
+            register_setting('wp_sn_posts-group', 'fb_app_id');
+            register_setting('wp_sn_posts-group', 'fb_secret');
+            register_setting('wp_sn_posts-group', 'fb_username');
+        } // END function init_custom_settings()
+
+        /**
+         * Menu Callback
+         */		
+        function plugin_settings_page()
+        {
+            if(!current_user_can('manage_options'))
+            {
+                wp_die(__('You do not have sufficient permissions to access this page.'));
+            }
+
+            // Render the settings template
+            include(sprintf("%s/templates/settings.php", dirname(__FILE__)));
+        } // END function plugin_settings_page()
 		
         /**
          * A function to initiate import of facebook posts
          */
         function import_facebook_posts()
-		{
-		    global $wpdb;
-            //$this->renew_facebook_access_token();
+        {
+            global $wpdb;
+            
             require_once(sprintf("%s/facebook/facebook.php", dirname(__FILE__)));
             $facebook = new Facebook(
                 array(
@@ -232,7 +232,7 @@ if(!class_exists('WP_Social_Network_Posts'))
                 $url = '/' . get_option('fb_username') . '/posts?' . $url_parts['query'];
                 $page = $facebook->api($url);              
             }
-		} // END function import_facebook_posts()
+        } // END function import_facebook_posts()
 
         /**
          * Activate the plugin
@@ -261,18 +261,18 @@ if(class_exists('WP_Social_Network_Posts'))
     // instantiate the plugin class
     $wp_social_network_posts_plugin = new WP_Social_Network_Posts(); 
 	
-	// Add a link to the settings page onto the plugin page
-	if(isset($wp_social_network_posts_plugin))
-	{
-		// Add the settings link to the plugins page
-		function plugin_settings_link($links)
-		{ 
-		  $settings_link = '<a href="options-general.php?page=wp_sn_posts">Settings</a>'; 
-		  array_unshift($links, $settings_link); 
-		  return $links; 
-		}
+    // Add a link to the settings page onto the plugin page
+    if(isset($wp_social_network_posts_plugin))
+    {
+        // Add the settings link to the plugins page
+        function plugin_settings_link($links)
+        { 
+            $settings_link = '<a href="options-general.php?page=wp_sn_posts">Settings</a>'; 
+            array_unshift($links, $settings_link); 
+            return $links; 
+        }
 
-		$plugin = plugin_basename(__FILE__); 
-		add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
-	}		
+        $plugin = plugin_basename(__FILE__); 
+        add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
+    }		
 }
