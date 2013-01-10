@@ -46,8 +46,8 @@ if(!class_exists('WP_Social_Network_Posts'))
         {
             // register actions
             add_action('init', array(&$this, 'init'));
-			add_action('admin_init', array(&$this, 'admin_init'));
-			add_action('admin_menu', array(&$this, 'add_menu'));
+            add_action('admin_init', array(&$this, 'admin_init'));
+            add_action('admin_menu', array(&$this, 'add_menu'));
         } // END function __construct
         
         /**
@@ -73,16 +73,16 @@ if(!class_exists('WP_Social_Network_Posts'))
             add_action('save_post', array(&$this, 'save_post'));
         }
 
-		/**
-		 * hook into WP's admin_init action hook
-		 */
-		function admin_init()
-		{
-			// Set up the settings for this plugin
-			$this->init_settings();
+        /**
+        * hook into WP's admin_init action hook
+        */
+        function admin_init()
+        {
+            // Set up the settings for this plugin
+            $this->init_settings();
             // Add metaboxes
             add_action('add_meta_boxes', array(&$this, 'add_meta_boxes'));
-		} // END static function activate
+        } // END static function activate
 
         /**
          * hook into WP's add_meta_boxes action hook
@@ -98,14 +98,14 @@ if(!class_exists('WP_Social_Network_Posts'))
             );					
         } // END function add_meta_boxes()
 
-		/**
-		 * called off of the add_meta_boxes function
-		 */		
-		function add_inner_meta_boxes($post)
-		{		
-			// Render the job order metabox
-			include(sprintf("%s/templates/sn_post_metabox.php", dirname(__FILE__)));			
-		} // END function add_inner_meta_boxes($post)
+        /**
+        * called off of the add_meta_boxes function
+        */		
+        function add_inner_meta_boxes($post)
+        {		
+            // Render the job order metabox
+            include(sprintf("%s/templates/sn_post_metabox.php", dirname(__FILE__)));			
+        } // END function add_inner_meta_boxes($post)
 		
         /**
         * Save the metaboxes for this custom post type
